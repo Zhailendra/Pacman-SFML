@@ -13,7 +13,7 @@ int main(int ac, char **av)
     std::shared_ptr<pacman::Core> core(new pacman::Core());
     try {
         exception->checkArguments(ac, av);
-        core->initCore(exception->getLibPath());
+        core->initCore(exception->getLibPath(), exception->getGamePath());
         core->startGraphical();
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;

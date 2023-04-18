@@ -30,10 +30,12 @@ namespace pacman {
 
             void checkArguments(int ac, char **av);
             std::string getLibPath() const;
+            std::string getGamePath() const;
 
         protected:
         private:
-            std::string _path;
+            std::string _libPath;
+            std::string _gamePath;
     };
 
 } // pacman

@@ -7,27 +7,54 @@
 
 #include "Graphical.hpp"
 
+#include <utility>
+
 namespace pacman {
 
     Graphical::Graphical()
     {
-        videoMode.width = WINDOW_WIDTH;
-        videoMode.height = WINDOW_HEIGHT;
-        videoMode.bitsPerPixel = 32;
-        window.create(videoMode, "Pacman", sf::Style::Close | sf::Style::Titlebar);
-        window.setFramerateLimit(60);
+        _videoMode.width = OBJECT_SIZE * MAP_WIDTH * WINDOW_RESIZE;
+        _videoMode.height = (FONT_SIZE + OBJECT_SIZE * MAP_HEIGHT) * WINDOW_RESIZE;
+        _videoMode.bitsPerPixel = 32;
+        _window.create(_videoMode, "Pacman", sf::Style::Close | sf::Style::Resize | sf::Style::Titlebar);
+        _window.setFramerateLimit(60);
+        _window.setView(sf::View(sf::FloatRect(0, 0, OBJECT_SIZE * MAP_WIDTH, FONT_SIZE + OBJECT_SIZE * MAP_HEIGHT)));
+        _textureMap.loadFromFile(MAP_ASSETS);
+        _spriteMap.setTexture(_textureMap);
     }
 
     void Graphical::runWindow()
     {
-        while (window.isOpen()) {
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed)
-                    window.close();
-            }
-            window.clear(sf::Color::Black);
-            window.display();
+        _map->initPacman();
+        _map->initMap();
+        while (_window.isOpen()) {
+            manageEvents();
+            _window.clear(sf::Color::Black);
+            _map->drawMap(_spriteMap, _window);
+            _window.display();
         }
+    }
+
+    void Graphical::manageEvents()
+    {
+        while (_window.pollEvent(_event)) {
+            switch (_event.type) {
+                case sf::Event::Closed:
+                    _window.close();
+                    break;
+                case sf::Event::KeyPressed:
+                    if (_event.key.code == sf::Keyboard::Escape)
+                        _window.close();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    void Graphical::setMap(IMapPtr map)
+    {
+        _map = std::move(map);
     }
 
     extern "C" IGraphical *graphical_constructor()

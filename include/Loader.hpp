@@ -38,6 +38,20 @@ namespace pacman {
                 return (lib);
             }
 
+            std::shared_ptr<LibLoader> loadGame()
+            {
+                std::shared_ptr<pacman::IMap> lib;
+                auto entryPoint = dlsym(_handle, GAME_CONSTRUCTOR);
+
+                if (!entryPoint)
+                    throw Error(ERROR_SYM);
+                auto *(*game)() = (pacman::IMap * (*) ()) entryPoint;
+                lib = std::shared_ptr<pacman::IMap>(game());
+                if (!lib)
+                    throw Error(ERROR_SYMBOL);
+                return (lib);
+            }
+
         protected:
             void *_handle;
         private:
@@ -45,5 +59,7 @@ namespace pacman {
 
     typedef Loader<IGraphical> LoaderGraphical;
     typedef std::shared_ptr<LoaderGraphical> LoaderGraphicalPtr;
+    typedef Loader<IMap> LoaderGame;
+    typedef std::shared_ptr<LoaderGame> LoaderGamePtr;
 
 } // pacman

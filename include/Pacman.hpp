@@ -7,16 +7,19 @@
 
 #pragma once
 
-#include <iostream>
+#include "Includes.hpp"
 
 namespace pacman {
-    class Pacman {
-    public:
-        Pacman();
-        ~Pacman();
 
-    protected:
-    private:
+    class Pacman : public IPacman {
+        public:
+            Pacman();
+            ~Pacman() override;
+
+            void initPacman(short x, short y) override;
+
+        protected:
+        private:
 
     };
 

@@ -8,7 +8,7 @@
 #pragma once
 
 #include "Includes.hpp"
-#include <SFML/Graphics.hpp>
+#include "Core.hpp"
 
 namespace pacman {
     class Graphical : public IGraphical {
@@ -17,12 +17,18 @@ namespace pacman {
             ~Graphical() override = default;
 
             void runWindow() override;
+            void manageEvents() override;
+
+            void setMap(IMapPtr map) override;
 
         protected:
+            IMapPtr _map;
         private:
-            sf::RenderWindow window;
-            sf::VideoMode videoMode;
-            sf::Event event{};
+            sf::RenderWindow _window;
+            sf::VideoMode _videoMode;
+            sf::Event _event{};
+            sf::Texture _textureMap;
+            sf::Sprite _spriteMap;
 
     };
 

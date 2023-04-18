@@ -13,6 +13,10 @@
 namespace pacman {
 
     class IGraphical;
+    class IPacman;
+    class IMap;
 
     typedef std::shared_ptr<IGraphical> IGraphicalPtr;
+    typedef std::shared_ptr<IMap> IMapPtr;
+    typedef std::shared_ptr<IPacman> IPacmanPtr;
 }

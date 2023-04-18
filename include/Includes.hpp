@@ -13,13 +13,17 @@
 #include <memory>
 #include <utility>
 #include <dlfcn.h>
+#include <vector>
+#include <array>
 
 /* Class */
 
 #include "IGraphical.hpp"
 #include "IPacman.hpp"
+#include "IMap.hpp"
 #include "Type.hpp"
 #include "Exception.hpp"
+#include "Map.hpp"
 
 /* Defines */
 
@@ -31,9 +35,7 @@
 #define ERROR_SYM "Error: dlsym failed"
 #define ERROR_SYMBOL "Error: cannot load symbol 'graphical_constructor': "
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
 
-/* typedefs */
-
-typedef std::shared_ptr<pacman::IGraphical> IGraphicalPtr;
+#define MAP_ASSETS "./assets/Map.png"

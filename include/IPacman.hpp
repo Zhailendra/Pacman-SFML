@@ -7,14 +7,12 @@
 
 #pragma once
 
-#define PACMAN_CONSTRUCTOR "pacman_constructor"
-
 namespace pacman {
 
     class IPacman {
-        public:
-            virtual ~IPacman() = default;
-            virtual void runGame() = 0;
+    public:
+        virtual ~IPacman() = default;
+        virtual void initPacman(short x, short y) = 0;
     };
 
 } // pacman
