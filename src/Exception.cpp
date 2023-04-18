@@ -9,16 +9,6 @@
 
 namespace pacman {
 
-    Exception::Exception()
-    {
-        std::cout << "Exception constructor" << std::endl;
-    }
-
-    Exception::~Exception()
-    {
-        std::cout << "Exception destructor" << std::endl;
-    }
-
     void Exception::checkArguments(int ac, char **av)
     {
         if (ac != 2)
@@ -28,7 +18,7 @@ namespace pacman {
             throw Error( INVALID_LIB USAGE);
     }
 
-    std::string Exception::getPath() const
+    std::string Exception::getLibPath() const
     {
         return _path;
     }

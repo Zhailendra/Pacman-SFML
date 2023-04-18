@@ -25,11 +25,11 @@ namespace pacman {
     };
     class Exception {
         public:
-            Exception();
-            ~Exception();
+            Exception() = default;
+            ~Exception() = default;
 
             void checkArguments(int ac, char **av);
-            std::string getPath() const;
+            std::string getLibPath() const;
 
         protected:
         private:

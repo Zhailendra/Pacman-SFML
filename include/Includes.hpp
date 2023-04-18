@@ -16,6 +16,9 @@
 
 /* Class */
 
+#include "IGraphical.hpp"
+#include "IPacman.hpp"
+#include "Type.hpp"
 #include "Exception.hpp"
 
 /* Defines */
@@ -25,6 +28,12 @@
 #define USAGE "\nUSAGE:\n\t./pacman [lib_path].so"
 
 #define ERROR_LIB "Error: dlopen failed"
+#define ERROR_SYM "Error: dlsym failed"
+#define ERROR_SYMBOL "Error: cannot load symbol 'graphical_constructor': "
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
+
+/* typedefs */
+
+typedef std::shared_ptr<pacman::IGraphical> IGraphicalPtr;

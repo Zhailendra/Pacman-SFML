@@ -10,8 +10,8 @@ include_directories(include)
 
 add_executable(pacman
         main.cpp
-        src/Loader.cpp
         src/Exception.cpp
+        src/Core.cpp
         )
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})

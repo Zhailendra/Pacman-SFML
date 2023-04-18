@@ -18,10 +18,6 @@ namespace pacman {
         window.setFramerateLimit(60);
     }
 
-    Graphical::~Graphical()
-    {
-    }
-
     void Graphical::runWindow()
     {
         while (window.isOpen()) {
@@ -32,6 +28,11 @@ namespace pacman {
             window.clear(sf::Color::Black);
             window.display();
         }
+    }
+
+    extern "C" IGraphical *graphical_constructor()
+    {
+        return new Graphical();
     }
 
 }

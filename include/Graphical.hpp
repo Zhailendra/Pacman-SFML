@@ -11,18 +11,18 @@
 #include <SFML/Graphics.hpp>
 
 namespace pacman {
-    class Graphical {
+    class Graphical : public IGraphical {
         public:
             Graphical();
-            ~Graphical();
+            ~Graphical() override = default;
 
-            void runWindow();
+            void runWindow() override;
 
         protected:
         private:
             sf::RenderWindow window;
             sf::VideoMode videoMode;
-            sf::Event event;
+            sf::Event event{};
 
     };
 
