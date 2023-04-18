@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(SFML 2.5 COMPONENTS graphics window system audio REQUIRED)
 add_library(Pacman_library SHARED)
 
-# libSFML
+# libPacman
 
 set_target_properties(
         Pacman_library
@@ -17,7 +17,8 @@ set_target_properties(
 target_sources(
         Pacman_library
         PRIVATE
-        Loader/Loader.cpp
+        Graphical/Graphical.cpp
+        Pacman/Pacman.cpp
 )
 
 target_link_libraries(Pacman_library sfml-graphics sfml-window sfml-system)

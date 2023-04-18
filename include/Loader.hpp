@@ -7,18 +7,22 @@
 
 #pragma once
 
-#include <iostream>
+#include "Includes.hpp"
 
-namespace Pacman {
+namespace pacman {
     class Loader {
-    public:
-        Loader();
+        public:
+            Loader();
+            ~Loader();
 
-        ~Loader();
+            void loadException(int ac, char **av);
+            void loadLib();
+            void loadGraphical();
 
-    protected:
-    private:
-
+        protected:
+            void *_handle;
+        private:
+            std::shared_ptr<Exception> _exception;
     };
 
 } // pacman

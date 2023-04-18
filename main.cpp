@@ -5,10 +5,18 @@
 ** main.cpp
 */
 
-#include "IPacman.hpp"
+#include "Loader.hpp"
 
-int main(void)
+int main(int ac, char **av)
 {
-    std::cout << "Hello World!" << std::endl;
+    std::shared_ptr<pacman::Loader> loader(new pacman::Loader());
+    try {
+        loader->loadException(ac, av);
+        loader->loadLib();
+        loader->loadGraphical();
+    } catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return (84);
+    }
     return (0);
 }
