@@ -20,8 +20,10 @@ namespace pacman {
             void initMap() override;
             void initPacman() override;
             void drawMap(sf::Sprite sprite, sf::RenderWindow &window) override;
+            IPacmanPtr getPacman() override;
             void setAllWalls();
 
+            std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> getMap() override;
             std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> setMap();
 
         protected:

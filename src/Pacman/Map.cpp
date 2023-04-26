@@ -46,6 +46,16 @@ namespace pacman {
         _pacman = std::make_shared<Pacman>();
     }
 
+    IPacmanPtr Map::getPacman()
+    {
+        return _pacman;
+    }
+
+    std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> Map::getMap()
+    {
+        return _map;
+    }
+
     std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> Map::setMap()
     {
         for (unsigned char i = 0; i < MAP_HEIGHT; i++) {

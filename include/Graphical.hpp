@@ -23,6 +23,7 @@ namespace pacman {
 
         protected:
             IMapPtr _map;
+            unsigned char _gameLevel;
         private:
             sf::RenderWindow _window;
             sf::VideoMode _videoMode;

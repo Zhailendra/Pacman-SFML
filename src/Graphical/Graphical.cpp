@@ -11,7 +11,7 @@
 
 namespace pacman {
 
-    Graphical::Graphical()
+    Graphical::Graphical() : _gameLevel(0)
     {
         _videoMode.width = OBJECT_SIZE * MAP_WIDTH * WINDOW_RESIZE;
         _videoMode.height = (FONT_SIZE + OBJECT_SIZE * MAP_HEIGHT) * WINDOW_RESIZE;
@@ -31,6 +31,9 @@ namespace pacman {
             manageEvents();
             _window.clear(sf::Color::Black);
             _map->drawMap(_spriteMap, _window);
+            _map->getPacman()->initWalls(_map->getMap());
+            _map->getPacman()->movePacman(_gameLevel);
+            _map->getPacman()->displayPacman(_window);
             _window.display();
         }
     }

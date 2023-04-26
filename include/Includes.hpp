@@ -15,6 +15,7 @@
 #include <dlfcn.h>
 #include <vector>
 #include <array>
+#include <cmath>
 
 /* Class */
 
