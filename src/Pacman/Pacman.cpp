@@ -36,16 +36,7 @@ namespace pacman {
         window.draw(_sprite);
     }
 
-    void Pacman::initWalls(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> map)
-    {
-        _mapArray = map;
-        _isWall[0] = checkIfWall(false, false, PACMAN_SPEED + _pos.x, _pos.y);
-        _isWall[1] = checkIfWall(false, false, _pos.x, _pos.y - PACMAN_SPEED);
-        _isWall[2] = checkIfWall(false, false, _pos.x - PACMAN_SPEED, _pos.y);
-        _isWall[3] = checkIfWall(false, false, _pos.x, _pos.y + PACMAN_SPEED);
-    }
-
-    bool Pacman::checkIfWall(bool isPellets, bool isDoor, short x, short y)
+    bool Pacman::checkIfWall(bool isPellets, bool isDoor, short x, short y, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map)
     {
         bool isWall = false;
         float x1 = x / static_cast<float>(OBJECT_SIZE);
@@ -76,19 +67,24 @@ namespace pacman {
             }
             if (0 <= x2 && 0 <= y2 && MAP_HEIGHT > y2 && MAP_WIDTH > x2) {
                 if (!isPellets) {
-                    (Cell::WALL == _mapArray[x2][y2]) ? isWall = true :
-                    (!isDoor && Cell::DOOR == _mapArray[x2][y2]) ? isWall = true : 0;
+                    (Cell::WALL == map[x2][y2]) ? isWall = true :
+                    (!isDoor && Cell::DOOR == map[x2][y2]) ? isWall = true : 0;
                 } else {
-                    (Cell::PELLET == _mapArray[x2][y2]) ? _mapArray[x2][y2] = Cell::EMPTY :
-                    (Cell::ENERGIZER == _mapArray[x2][y2]) ? isWall = true, _mapArray[x2][y2] = Cell::EMPTY : 0;
+                    (Cell::PELLET == map[x2][y2]) ? map[x2][y2] = Cell::EMPTY :
+                    (Cell::ENERGIZER == map[x2][y2]) ? isWall = true, map[x2][y2] = Cell::EMPTY : 0;
                 }
             }
         }
         return isWall;
     }
 
-    void Pacman::movePacman(unsigned char gameLevel)
+    void Pacman::movePacman(unsigned char gameLevel, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map)
     {
+        _isWall[0] = checkIfWall(false, false, PACMAN_SPEED + _pos.x, _pos.y, map);
+        _isWall[1] = checkIfWall(false, false, _pos.x, _pos.y - PACMAN_SPEED, map);
+        _isWall[2] = checkIfWall(false, false, _pos.x - PACMAN_SPEED, _pos.y, map);
+        _isWall[3] = checkIfWall(false, false, _pos.x, _pos.y + PACMAN_SPEED, map);
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             !_isWall[1] ? _direction = 1 : 0;
         }
@@ -121,7 +117,7 @@ namespace pacman {
             _pos.x = OBJECT_SIZE * MAP_WIDTH - PACMAN_SPEED;
         else if (OBJECT_SIZE * MAP_WIDTH <= _pos.x)
             _pos.x = PACMAN_SPEED - OBJECT_SIZE;
-        if (checkIfWall(true, false, _pos.x, _pos.y))
+        if (checkIfWall(true, false, _pos.x, _pos.y, map))
             _slowGhost = static_cast<unsigned short>(SLOW_TIMER / pow(2, gameLevel));
         else
             _slowGhost = std::max(0, _slowGhost - 1);

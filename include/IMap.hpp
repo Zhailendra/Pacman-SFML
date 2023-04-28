@@ -36,6 +36,6 @@ namespace pacman {
             virtual void initPacman() = 0;
             virtual void drawMap(sf::Sprite sprite, sf::RenderWindow &window) = 0;
             virtual IPacmanPtr getPacman() = 0;
-            virtual std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> getMap() = 0;
+            virtual std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &getMap() = 0;
     };
 } // pacman

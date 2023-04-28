@@ -51,7 +51,7 @@ namespace pacman {
         return _pacman;
     }
 
-    std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> Map::getMap()
+    std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &Map::getMap()
     {
         return _map;
     }

@@ -31,8 +31,7 @@ namespace pacman {
             manageEvents();
             _window.clear(sf::Color::Black);
             _map->drawMap(_spriteMap, _window);
-            _map->getPacman()->initWalls(_map->getMap());
-            _map->getPacman()->movePacman(_gameLevel);
+            _map->getPacman()->movePacman(_gameLevel, _map->getMap());
             _map->getPacman()->displayPacman(_window);
             _window.display();
         }

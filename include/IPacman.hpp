@@ -22,9 +22,8 @@ namespace pacman {
         virtual ~IPacman() = default;
         virtual void initPacman(short x, short y) = 0;
         virtual void displayPacman(sf::RenderWindow &window) = 0;
-        virtual void initWalls(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> map) = 0;
-        virtual bool checkIfWall(bool isPellets, bool isDoor, short x, short y) = 0;
-        virtual void movePacman(unsigned char gameLevel) = 0;
+        virtual void movePacman(unsigned char gameLevel, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &_map) = 0;
+        virtual bool checkIfWall(bool isPellets, bool isDoor, short x, short y, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map) = 0;
     };
 
     struct pos {

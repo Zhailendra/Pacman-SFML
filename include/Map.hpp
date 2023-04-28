@@ -23,7 +23,7 @@ namespace pacman {
             IPacmanPtr getPacman() override;
             void setAllWalls();
 
-            std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> getMap() override;
+            std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &getMap() override;
             std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> setMap();
 
         protected:
