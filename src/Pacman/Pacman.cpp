@@ -11,7 +11,7 @@
 
 namespace pacman {
 
-    Pacman::Pacman() : _animTime(0), _animFrame(0), _direction(0), _slowGhost(0)
+    Pacman::Pacman() : _animTime(0), _animFrame(0), _direction(0), _slowGhost(0), _nbPellets(0)
     {
         std::cout << "Pacman created" << std::endl;
     }
@@ -24,6 +24,16 @@ namespace pacman {
     void Pacman::initPacman(short x, short y)
     {
         _pos = {x, y};
+    }
+
+    void Pacman::setNbPellets(int nbPellets)
+    {
+        _nbPellets = nbPellets;
+    }
+
+    int Pacman::getNbPellets() const
+    {
+        return _nbPellets;
     }
 
     void Pacman::displayPacman(sf::RenderWindow &window)
@@ -70,7 +80,7 @@ namespace pacman {
                     (Cell::WALL == map[x2][y2]) ? isWall = true :
                     (!isDoor && Cell::DOOR == map[x2][y2]) ? isWall = true : 0;
                 } else {
-                    (Cell::PELLET == map[x2][y2]) ? map[x2][y2] = Cell::EMPTY :
+                    (Cell::PELLET == map[x2][y2]) ? map[x2][y2] = Cell::EMPTY, _nbPellets-- :
                     (Cell::ENERGIZER == map[x2][y2]) ? isWall = true, map[x2][y2] = Cell::EMPTY : 0;
                 }
             }

@@ -32,6 +32,7 @@ namespace pacman {
             std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> _newMap{};
 
             IPacmanPtr _pacman;
+            int _nbPellets;
         private:
             bool _isWallUp{};
             bool _isWallDown{};

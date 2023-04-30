@@ -13,7 +13,7 @@ namespace pacman {
 
     class Pacman : public IPacman {
         public:
-            Pacman();
+            explicit Pacman();
             ~Pacman() override;
 
             void initPacman(short x, short y) override;
@@ -21,14 +21,18 @@ namespace pacman {
             void movePacman(unsigned char gameLevel, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map) override;
             bool checkIfWall(bool isPellets, bool isDoor, short x, short y, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map) override;
 
+            void setNbPellets(int nbPellets) override;
+            int getNbPellets() const override;
+
         protected:
             unsigned short _animTime;
             unsigned char _animFrame;
             unsigned char _direction;
             unsigned short _slowGhost;
+            int _nbPellets;
         private:
             std::array<bool, 4> _isWall{};
-            pos _pos;
+            pos _pos{};
             sf::Sprite _sprite;
             sf::Texture _texture;
     };

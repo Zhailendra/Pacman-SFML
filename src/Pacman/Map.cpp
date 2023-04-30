@@ -9,7 +9,7 @@
 
 namespace pacman {
 
-    Map::Map()
+    Map::Map() : _nbPellets(0)
     {
         _originalMap = {
                 " ################### ",
@@ -58,6 +58,7 @@ namespace pacman {
 
     std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> Map::setMap()
     {
+        _nbPellets = 0;
         for (unsigned char i = 0; i < MAP_HEIGHT; i++) {
             for (unsigned char j = 0; j < MAP_WIDTH; j++) {
                 _newMap[j][i] = Cell::EMPTY;
@@ -70,6 +71,7 @@ namespace pacman {
                         break;
                     case '.':
                         _newMap[j][i] = Cell::PELLET;
+                        _nbPellets++;
                         break;
                     case 'o':
                         _newMap[j][i] = Cell::ENERGIZER;
@@ -80,6 +82,7 @@ namespace pacman {
                 }
             }
         }
+        _pacman->setNbPellets(_nbPellets);
         return _newMap;
     }
 

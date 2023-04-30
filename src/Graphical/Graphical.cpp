@@ -29,6 +29,10 @@ namespace pacman {
         _map->initMap();
         while (_window.isOpen()) {
             manageEvents();
+            if (_map->getPacman()->getNbPellets() == 0) {
+                _gameLevel++;
+                _map->initMap();
+            }
             _window.clear(sf::Color::Black);
             _map->drawMap(_spriteMap, _window);
             _map->getPacman()->movePacman(_gameLevel, _map->getMap());
