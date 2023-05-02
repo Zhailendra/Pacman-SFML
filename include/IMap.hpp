@@ -15,8 +15,8 @@
 
 /* Globals */
 
-constexpr unsigned char MAP_HEIGHT = 21;
-constexpr unsigned char MAP_WIDTH = 21;
+constexpr int MAP_HEIGHT = 21;
+constexpr int MAP_WIDTH = 21;
 
 /* Enum */
 

@@ -16,23 +16,23 @@ namespace pacman {
             explicit Pacman();
             ~Pacman() override;
 
-            void initPacman(short x, short y) override;
+            void initPacman(double x, double y) override;
             void displayPacman(sf::RenderWindow &window, bool isPlaying) override;
-            void movePacman(unsigned char gameLevel, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map) override;
-            bool checkIfWall(bool isPellets, bool isDoor, short x, short y, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map) override;
+            void movePacman(int gameLevel, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map) override;
+            bool checkIfWall(bool isPellets, bool isDoor, double x, double y, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map) override;
 
             void setNbPellets(int nbPellets) override;
             int getNbPellets() const override;
             bool getAnim() const override;
 
-            void setAnim(unsigned short speed) override;
+            void setAnim(int speed) override;
             void reStartGame() override;
 
         protected:
-            unsigned short _animTime;
-            unsigned char _animFrame;
-            unsigned char _direction;
-            unsigned short _slowGhost;
+            int _animTime;
+            int _animFrame;
+            int _direction;
+            int _slowGhost;
             bool _doAnim;
             int _nbPellets;
         private:

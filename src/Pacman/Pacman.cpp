@@ -21,7 +21,7 @@ namespace pacman {
         std::cout << "Pacman destroyed" << std::endl;
     }
 
-    void Pacman::initPacman(short x, short y)
+    void Pacman::initPacman(double x, double y)
     {
         _pos = {x, y};
     }
@@ -43,7 +43,7 @@ namespace pacman {
 
     void Pacman::displayPacman(sf::RenderWindow &window, bool isPlaying)
     {
-        _animFrame = static_cast<unsigned char>(std::floor(_animTime / static_cast<float>(PACMAN_ANIM_SPEED)));
+        _animFrame = std::floor(float(_animTime) / static_cast<float>(PACMAN_ANIM_SPEED));
 
         if (!isPlaying) {
             if (_animTime < PACMAN_DEATH_FRAME * PACMAN_ANIM_SPEED) {
@@ -55,7 +55,7 @@ namespace pacman {
             } else
                 _doAnim = true;
         } else {
-            _sprite.setPosition(_pos.x, _pos.y);
+            _sprite.setPosition(float(_pos.x), float(_pos.y));
             _texture.loadFromFile("./assets/Pacman.png");
             _sprite.setTexture(_texture);
             _sprite.setTextureRect(sf::IntRect(OBJECT_SIZE * _animFrame,OBJECT_SIZE * _direction,OBJECT_SIZE, OBJECT_SIZE));
@@ -64,7 +64,7 @@ namespace pacman {
         }
     }
 
-    void Pacman::setAnim(unsigned short speed)
+    void Pacman::setAnim(int speed)
     {
         _animTime = speed;
     }
@@ -77,15 +77,15 @@ namespace pacman {
         _doAnim = false;
     }
 
-    bool Pacman::checkIfWall(bool isPellets, bool isDoor, short x, short y, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map)
+    bool Pacman::checkIfWall(bool isPellets, bool isDoor, double x, double y, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map)
     {
         bool isWall = false;
-        float x1 = x / static_cast<float>(OBJECT_SIZE);
-        float y1 = y / static_cast<float>(OBJECT_SIZE);
-        short x2 = 0;
-        short y2 = 0;
+        double x1 = x / static_cast<double>(OBJECT_SIZE);
+        double y1 = y / static_cast<double>(OBJECT_SIZE);
+        int x2;
+        int y2;
 
-        for (unsigned char i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             x2 = 0;
             y2 = 0;
             switch (i) {
@@ -119,7 +119,7 @@ namespace pacman {
         return isWall;
     }
 
-    void Pacman::movePacman(unsigned char gameLevel, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map)
+    void Pacman::movePacman(int gameLevel, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map)
     {
         _isWall[0] = checkIfWall(false, false, PACMAN_SPEED + _pos.x, _pos.y, map);
         _isWall[1] = checkIfWall(false, false, _pos.x, _pos.y - PACMAN_SPEED, map);

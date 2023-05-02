@@ -14,11 +14,11 @@
 
 /* Globals */
 
-constexpr unsigned char WINDOW_RESIZE = 2;
+constexpr int WINDOW_RESIZE = 2;
 
-constexpr unsigned char OBJECT_SIZE = 16;
+constexpr int OBJECT_SIZE = 16;
 
-constexpr unsigned char FONT_SIZE = 16;
+constexpr int FONT_SIZE = 16;
 
 namespace pacman {
 
@@ -27,7 +27,7 @@ namespace pacman {
             virtual ~IGraphical() = default;
             virtual void runWindow() = 0;
             virtual void manageEvents() = 0;
-            virtual void displayText(const std::string &toDisplay, bool atCenter, unsigned short x, unsigned short y) = 0;
+            virtual void displayText(const std::string &toDisplay, bool atCenter, double x, double y) = 0;
             virtual void setMap(IMapPtr map) = 0;
     };
 

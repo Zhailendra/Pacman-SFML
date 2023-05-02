@@ -7,11 +7,12 @@
 
 #include "Graphical.hpp"
 
+#include <cmath>
 #include <utility>
 
 namespace pacman {
 
-    Graphical::Graphical() : _gameLevel(0), _isPlaying(true)
+    Graphical::Graphical() : _gameLevel(1), _isPlaying(true)
     {
         _videoMode.width = OBJECT_SIZE * MAP_WIDTH * WINDOW_RESIZE;
         _videoMode.height = (FONT_SIZE + OBJECT_SIZE * MAP_HEIGHT) * WINDOW_RESIZE;
@@ -31,7 +32,7 @@ namespace pacman {
             manageEvents();
             if (_isPlaying) {
                 _map->getPacman()->movePacman(_gameLevel, _map->getMap());
-                if (_map->getPacman()->getNbPellets() == 130) {
+                if (_map->getPacman()->getNbPellets() == 0) {
                     _gameLevel++;
                     _isPlaying = false;
                     _map->getPacman()->setAnim(0);
@@ -45,6 +46,7 @@ namespace pacman {
             _window.clear(sf::Color::Black);
             if (_isPlaying) {
                 _map->drawMap(_spriteMap, _window);
+                displayText("CURRENT LEVEL: " + std::to_string(_gameLevel), false, false, OBJECT_SIZE * MAP_HEIGHT);
             }
             _map->getPacman()->displayPacman(_window, _isPlaying);
             if (_map->getPacman()->getAnim()) {
@@ -54,25 +56,25 @@ namespace pacman {
         }
     }
 
-    void Graphical::displayText(const std::string &toDisplay, bool atCenter, unsigned short x, unsigned short y)
+    void Graphical::displayText(const std::string &toDisplay, bool atCenter, double x, double y)
     {
-        short x1 = x;
-        short y1 = y;
+        double x1 = x;
+        double y1 = y;
         _fontTexture .loadFromFile(FONT_ASSETS);
-        unsigned char sizeWidth = _fontTexture.getSize().x / 96;
+        int sizeWidth = static_cast<unsigned short>(_fontTexture.getSize().x / 96);
         _font.setTexture(_fontTexture);
 
         if (atCenter) {
-            x1 = static_cast<short>(round(0.5f * (OBJECT_SIZE * MAP_WIDTH - sizeWidth * toDisplay.substr(0, toDisplay.find_first_of('\n')).size())));
-            y1 = static_cast<short>(round(0.5f * (OBJECT_SIZE * MAP_HEIGHT - FONT_SIZE * (1 + std::count(toDisplay.begin(), toDisplay.end(), '\n')))));
+            x1 = std::round(0.5f * double((OBJECT_SIZE * MAP_WIDTH - sizeWidth * toDisplay.substr(0, toDisplay.find_first_of('\n')).size())));
+            y1 = std::round(0.5f * double((OBJECT_SIZE * MAP_HEIGHT - FONT_SIZE * (1 + std::count(toDisplay.begin(), toDisplay.end(), '\n')))));
         }
         for (std::string::const_iterator i = toDisplay.begin(); i != toDisplay.end(); i++) {
             if (*i == '\n') {
-                (atCenter) ? x1 = static_cast<short>(round(0.5f * (OBJECT_SIZE * MAP_WIDTH - sizeWidth * toDisplay.substr(1 + i - toDisplay.begin(), toDisplay.find_first_of('\n', 1 + i - toDisplay.begin()) - (1 + i - toDisplay.begin())).size()))) : x1 = x;
+                (atCenter) ? x1 = static_cast<short>(std::round(0.5f * double((OBJECT_SIZE * MAP_WIDTH - sizeWidth * toDisplay.substr(1 + i - toDisplay.begin(), toDisplay.find_first_of('\n', 1 + i - toDisplay.begin()) - (1 + i - toDisplay.begin())).size())))) : x1 = x;
                 y1 += FONT_SIZE;
                 continue;
             }
-            _font.setPosition(x1, y1);
+            _font.setPosition(float(x1), float(y1));
             _font.setTextureRect(sf::IntRect(sizeWidth * (*i - 32), 0, sizeWidth, FONT_SIZE));
             x1 += sizeWidth;
             _window.draw(_font);

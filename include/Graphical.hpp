@@ -19,13 +19,13 @@ namespace pacman {
             void runWindow() override;
             void manageEvents() override;
 
-            void displayText(const std::string &toDisplay, bool atCenter, unsigned short x, unsigned short y) override;
+            void displayText(const std::string &toDisplay, bool atCenter, double x, double y) override;
 
             void setMap(IMapPtr map) override;
 
         protected:
             IMapPtr _map;
-            unsigned char _gameLevel;
+            int _gameLevel;
             bool _isPlaying;
         private:
             sf::RenderWindow _window;
