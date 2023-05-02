@@ -11,7 +11,7 @@
 
 namespace pacman {
 
-    Pacman::Pacman() : _animTime(0), _animFrame(0), _direction(0), _slowGhost(0), _nbPellets(0)
+    Pacman::Pacman() : _animTime(0), _animFrame(0), _direction(0), _slowGhost(0), _nbPellets(0), _doAnim(false)
     {
         std::cout << "Pacman created" << std::endl;
     }
@@ -36,14 +36,45 @@ namespace pacman {
         return _nbPellets;
     }
 
-    void Pacman::displayPacman(sf::RenderWindow &window)
+    bool Pacman::getAnim() const
+    {
+        return _doAnim;
+    }
+
+    void Pacman::displayPacman(sf::RenderWindow &window, bool isPlaying)
     {
         _animFrame = static_cast<unsigned char>(std::floor(_animTime / static_cast<float>(PACMAN_ANIM_SPEED)));
-        _sprite.setPosition(_pos.x, _pos.y);
-        _texture.loadFromFile("assets/Pacman.png");
-        _sprite.setTexture(_texture);
-        _sprite.setTextureRect(sf::IntRect(OBJECT_SIZE * _animFrame, OBJECT_SIZE * _direction, OBJECT_SIZE, OBJECT_SIZE));
-        window.draw(_sprite);
+
+        if (!isPlaying) {
+            if (_animTime < PACMAN_DEATH_FRAME * PACMAN_ANIM_SPEED) {
+                _animTime++;
+                _texture.loadFromFile("./assets/PacmanDisappear.png");
+                _sprite.setTexture(_texture);
+                _sprite.setTextureRect(sf::IntRect(OBJECT_SIZE * _animFrame, 0, OBJECT_SIZE, OBJECT_SIZE));
+                window.draw(_sprite);
+            } else
+                _doAnim = true;
+        } else {
+            _sprite.setPosition(_pos.x, _pos.y);
+            _texture.loadFromFile("./assets/Pacman.png");
+            _sprite.setTexture(_texture);
+            _sprite.setTextureRect(sf::IntRect(OBJECT_SIZE * _animFrame,OBJECT_SIZE * _direction,OBJECT_SIZE, OBJECT_SIZE));
+            window.draw(_sprite);
+            _animTime = (1 + _animTime) % (PACMAN_ANIM_FRAME * PACMAN_ANIM_SPEED);
+        }
+    }
+
+    void Pacman::setAnim(unsigned short speed)
+    {
+        _animTime = speed;
+    }
+
+    void Pacman::reStartGame()
+    {
+        _animTime = 0;
+        _slowGhost = 0;
+        _direction = 0;
+        _doAnim = false;
     }
 
     bool Pacman::checkIfWall(bool isPellets, bool isDoor, short x, short y, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map)

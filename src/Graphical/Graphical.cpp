@@ -11,7 +11,7 @@
 
 namespace pacman {
 
-    Graphical::Graphical() : _gameLevel(0)
+    Graphical::Graphical() : _gameLevel(0), _isPlaying(true)
     {
         _videoMode.width = OBJECT_SIZE * MAP_WIDTH * WINDOW_RESIZE;
         _videoMode.height = (FONT_SIZE + OBJECT_SIZE * MAP_HEIGHT) * WINDOW_RESIZE;
@@ -29,17 +29,57 @@ namespace pacman {
         _map->initMap();
         while (_window.isOpen()) {
             manageEvents();
-            if (_map->getPacman()->getNbPellets() == 0) {
-                _gameLevel++;
+            if (_isPlaying) {
+                _map->getPacman()->movePacman(_gameLevel, _map->getMap());
+                if (_map->getPacman()->getNbPellets() == 130) {
+                    _gameLevel++;
+                    _isPlaying = false;
+                    _map->getPacman()->setAnim(0);
+                }
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                _isPlaying = true;
                 _map->initMap();
+                _map->getPacman()->reStartGame();
             }
             _window.clear(sf::Color::Black);
-            _map->drawMap(_spriteMap, _window);
-            _map->getPacman()->movePacman(_gameLevel, _map->getMap());
-            _map->getPacman()->displayPacman(_window);
+            if (_isPlaying) {
+                _map->drawMap(_spriteMap, _window);
+            }
+            _map->getPacman()->displayPacman(_window, _isPlaying);
+            if (_map->getPacman()->getAnim()) {
+                (!_isPlaying) ? displayText("You won!\n\nPress Enter to play again\nor\nEscape to quit.",true, 0, 0) : displayText("GAME OVER", true, 0, 0);
+            }
             _window.display();
         }
     }
+
+    void Graphical::displayText(const std::string &toDisplay, bool atCenter, unsigned short x, unsigned short y)
+    {
+        short x1 = x;
+        short y1 = y;
+        _fontTexture .loadFromFile(FONT_ASSETS);
+        unsigned char sizeWidth = _fontTexture.getSize().x / 96;
+        _font.setTexture(_fontTexture);
+
+        if (atCenter) {
+            x1 = static_cast<short>(round(0.5f * (OBJECT_SIZE * MAP_WIDTH - sizeWidth * toDisplay.substr(0, toDisplay.find_first_of('\n')).size())));
+            y1 = static_cast<short>(round(0.5f * (OBJECT_SIZE * MAP_HEIGHT - FONT_SIZE * (1 + std::count(toDisplay.begin(), toDisplay.end(), '\n')))));
+        }
+        for (std::string::const_iterator i = toDisplay.begin(); i != toDisplay.end(); i++) {
+            if (*i == '\n') {
+                (atCenter) ? x1 = static_cast<short>(round(0.5f * (OBJECT_SIZE * MAP_WIDTH - sizeWidth * toDisplay.substr(1 + i - toDisplay.begin(), toDisplay.find_first_of('\n', 1 + i - toDisplay.begin()) - (1 + i - toDisplay.begin())).size()))) : x1 = x;
+                y1 += FONT_SIZE;
+                continue;
+            }
+            _font.setPosition(x1, y1);
+            _font.setTextureRect(sf::IntRect(sizeWidth * (*i - 32), 0, sizeWidth, FONT_SIZE));
+            x1 += sizeWidth;
+            _window.draw(_font);
+        }
+    }
+
+
 
     void Graphical::manageEvents()
     {

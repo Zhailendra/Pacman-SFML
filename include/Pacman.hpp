@@ -17,18 +17,23 @@ namespace pacman {
             ~Pacman() override;
 
             void initPacman(short x, short y) override;
-            void displayPacman(sf::RenderWindow &window) override;
+            void displayPacman(sf::RenderWindow &window, bool isPlaying) override;
             void movePacman(unsigned char gameLevel, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map) override;
             bool checkIfWall(bool isPellets, bool isDoor, short x, short y, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &map) override;
 
             void setNbPellets(int nbPellets) override;
             int getNbPellets() const override;
+            bool getAnim() const override;
+
+            void setAnim(unsigned short speed) override;
+            void reStartGame() override;
 
         protected:
             unsigned short _animTime;
             unsigned char _animFrame;
             unsigned char _direction;
             unsigned short _slowGhost;
+            bool _doAnim;
             int _nbPellets;
         private:
             std::array<bool, 4> _isWall{};

@@ -40,3 +40,4 @@
 #define WINDOW_HEIGHT 1080
 
 #define MAP_ASSETS "./assets/Map.png"
+#define FONT_ASSETS "./assets/Font.png"
