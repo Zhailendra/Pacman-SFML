@@ -31,6 +31,8 @@ namespace pacman {
             std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> _map{};
             std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> _newMap{};
 
+            std::array<pos, 4> _ghostsPos;
+
             IPacmanPtr _pacman;
             int _nbPellets;
         private:

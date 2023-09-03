@@ -30,7 +30,7 @@
 
 #define INVALID_ARG "Error: Invalid number of arguments"
 #define INVALID_LIB "Error: Invalid file extension"
-#define USAGE "\nUSAGE:\n\t./pacman [lib_path].so"
+#define USAGE "\nUSAGE:\n\t./pacman"
 
 #define ERROR_LIB "Error: dlopen failed"
 #define ERROR_SYM "Error: dlsym failed"

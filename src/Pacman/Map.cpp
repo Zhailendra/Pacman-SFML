@@ -79,6 +79,22 @@ namespace pacman {
                     case 'P':
                         _pacman->initPacman(OBJECT_SIZE * j, OBJECT_SIZE * i);
                         break;
+                    case '0':
+                        _ghostsPos[0].x = OBJECT_SIZE * j;
+                        _ghostsPos[0].y = OBJECT_SIZE * i;
+                        break;
+                    case '1':
+                        _ghostsPos[1].x = OBJECT_SIZE * j;
+                        _ghostsPos[1].y = OBJECT_SIZE * i;
+                        break;
+                    case '2':
+                        _ghostsPos[2].x = OBJECT_SIZE * j;
+                        _ghostsPos[2].y = OBJECT_SIZE * i;
+                        break;
+                    case '3':
+                        _ghostsPos[3].x = OBJECT_SIZE * j;
+                        _ghostsPos[3].y = OBJECT_SIZE * i;
+                        break;
                 }
             }
         }

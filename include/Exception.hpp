@@ -28,7 +28,7 @@ namespace pacman {
             Exception() = default;
             ~Exception() = default;
 
-            void checkArguments(int ac, char **av);
+            void checkArguments(int ac);
             std::string getLibPath() const;
             std::string getGamePath() const;
 

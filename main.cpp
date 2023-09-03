@@ -9,10 +9,11 @@
 
 int main(int ac, char **av)
 {
+    (void) av;
     std::shared_ptr<pacman::Exception> exception(new pacman::Exception());
     std::shared_ptr<pacman::Core> core(new pacman::Core());
     try {
-        exception->checkArguments(ac, av);
+        exception->checkArguments(ac);
         core->initCore(exception->getLibPath(), exception->getGamePath());
         core->startGraphical();
     } catch (std::exception &e) {

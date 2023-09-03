@@ -34,13 +34,4 @@ namespace pacman {
         virtual void reStartGame() = 0;
     };
 
-    struct pos {
-        double x;
-        double y;
-
-        bool operator==(const pos &other) const {
-            return x == other.x && y == other.y;
-        }
-    };
-
 } // pacman

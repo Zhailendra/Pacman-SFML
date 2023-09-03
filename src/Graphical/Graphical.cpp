@@ -30,29 +30,56 @@ namespace pacman {
         _map->initMap();
         while (_window.isOpen()) {
             manageEvents();
-            if (_isPlaying) {
-                _map->getPacman()->movePacman(_gameLevel, _map->getMap());
-                if (_map->getPacman()->getNbPellets() == 0) {
-                    _gameLevel++;
-                    _isPlaying = false;
-                    _map->getPacman()->setAnim(0);
-                }
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-                _isPlaying = true;
-                _map->initMap();
-                _map->getPacman()->reStartGame();
-            }
+            manageGame();
             _window.clear(sf::Color::Black);
-            if (_isPlaying) {
-                _map->drawMap(_spriteMap, _window);
-                displayText("CURRENT LEVEL: " + std::to_string(_gameLevel), false, false, OBJECT_SIZE * MAP_HEIGHT);
-            }
-            _map->getPacman()->displayPacman(_window, _isPlaying);
-            if (_map->getPacman()->getAnim()) {
-                (!_isPlaying) ? displayText("You won!\n\nPress Enter to play again\nor\nEscape to quit.",true, 0, 0) : displayText("GAME OVER", true, 0, 0);
-            }
+            manageDrawing();
             _window.display();
+        }
+    }
+
+    void Graphical::manageEvents()
+    {
+        while (_window.pollEvent(_event)) {
+            switch (_event.type) {
+                case sf::Event::Closed:
+                    _window.close();
+                    break;
+                case sf::Event::KeyPressed:
+                    if (_event.key.code == sf::Keyboard::Escape)
+                        _window.close();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    void Graphical::manageGame()
+    {
+        if (_isPlaying) {
+            _map->getPacman()->movePacman(_gameLevel, _map->getMap());
+            if (_map->getPacman()->getNbPellets() == 0) {
+                _gameLevel++;
+                _isPlaying = false;
+                _map->getPacman()->setAnim(0);
+            }
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+            _isPlaying = true;
+            _map->initMap();
+            _map->getPacman()->reStartGame();
+        }
+    }
+
+    void Graphical::manageDrawing()
+    {
+        if (_isPlaying) {
+            _map->drawMap(_spriteMap, _window);
+            displayText("CURRENT LEVEL: " + std::to_string(_gameLevel), false, false, OBJECT_SIZE * MAP_HEIGHT);
+        }
+        _map->getPacman()->displayPacman(_window, _isPlaying);
+        if (_map->getPacman()->getAnim()) {
+            (!_isPlaying) ? displayText("You won!\n\nPress Enter to play again\nor\nEscape to quit.",true, 0, 0) : displayText("GAME OVER", true, 0, 0);
         }
     }
 
@@ -78,25 +105,6 @@ namespace pacman {
             _font.setTextureRect(sf::IntRect(sizeWidth * (*i - 32), 0, sizeWidth, FONT_SIZE));
             x1 += sizeWidth;
             _window.draw(_font);
-        }
-    }
-
-
-
-    void Graphical::manageEvents()
-    {
-        while (_window.pollEvent(_event)) {
-            switch (_event.type) {
-                case sf::Event::Closed:
-                    _window.close();
-                    break;
-                case sf::Event::KeyPressed:
-                    if (_event.key.code == sf::Keyboard::Escape)
-                        _window.close();
-                    break;
-                default:
-                    break;
-            }
         }
     }
 

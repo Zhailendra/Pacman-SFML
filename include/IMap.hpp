@@ -38,4 +38,17 @@ namespace pacman {
             virtual IPacmanPtr getPacman() = 0;
             virtual std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> &getMap() = 0;
     };
+
+    /* struct */
+
+    struct pos {
+
+        double x;
+        double y;
+
+        bool operator==(const pos &other) const {
+            return x == other.x && y == other.y;
+        }
+    };
+
 } // pacman

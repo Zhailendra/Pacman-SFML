@@ -18,6 +18,8 @@ namespace pacman {
 
             void runWindow() override;
             void manageEvents() override;
+            void manageGame() override;
+            void manageDrawing() override;
 
             void displayText(const std::string &toDisplay, bool atCenter, double x, double y) override;
 
